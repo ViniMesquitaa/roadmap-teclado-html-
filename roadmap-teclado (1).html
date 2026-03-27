@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap de Teclado & Piano</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #161618;
+    --surface2: #1e1e22;
+    --border: #2a2a30;
+    --accent: #c9a84c;
+    --accent2: #e8c97a;
+    --text: #e8e6e0;
+    --muted: #7a7870;
+    --tag-bg: #242428;
+    --white: #f5f3ee;
+    --done: #3a5c3a;
+    --done-text: #7dc47d;
+    --module1: #b85c38;
+    --module2: #8b5e9e;
+    --module3: #3a7a9e;
+    --module4: #4a9e6a;
+    --module5: #9e7a3a;
+    --module6: #9e3a6a;
+    --module7: #3a6a9e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0d0d0f 0%, #1a1008 50%, #0d0d0f 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 28px,
+      rgba(255,255,255,0.015) 28px,
+      rgba(255,255,255,0.015) 30px
+    );
+    pointer-events: none;
+  }
+
+  .piano-keys-deco {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .key-w {
+    width: 22px; height: 70px;
+    background: linear-gradient(180deg, #f5f3ee 0%, #ddd9d0 100%);
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #bbb;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    position: relative;
+  }
+
+  .key-b {
+    width: 14px; height: 44px;
+    background: linear-gradient(180deg, #2a2a2a 0%, #111 100%);
+    border-radius: 0 0 3px 3px;
+    border: 1px solid #444;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.8);
+    margin: 0 -8px;
+    position: relative;
+    z-index: 2;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+  }
+
+  header h1 span {
+    color: var(--accent);
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .progress-bar-wrap {
+    max-width: 400px;
+    margin: 1.5rem auto 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .progress-bar-wrap label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    transition: width 0.8s ease;
+  }
+
+  /* TABS NAV */
+  .tabs-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .tabs-nav::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .tab-btn .mod-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  /* MAIN CONTENT */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+  }
+
+  /* MODULE HEADER */
+  .mod-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mod-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.12;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .mod-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .mod-info p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  /* LESSON GRID */
+  .lessons-grid {
+    display: grid;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .lesson-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lesson-item:hover {
+    border-color: rgba(201, 168, 76, 0.3);
+    background: var(--surface2);
+  }
+
+  .lesson-item.completed {
+    border-color: rgba(61, 100, 61, 0.5);
+    background: rgba(30, 50, 30, 0.4);
+  }
+
+  .lesson-item.completed .lesson-title {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  .lesson-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 0.65rem;
+  }
+
+  .lesson-item.completed .lesson-check {
+    background: var(--done);
+    border-color: var(--done);
+    color: var(--done-text);
+  }
+
+  .lesson-item.completed .lesson-check::after {
+    content: '✓';
+  }
+
+  .lesson-title {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .lesson-tag {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    background: var(--tag-bg);
+    border-radius: 4px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  /* RESOURCES */
+  .resources-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .resources-section h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 0.5rem;
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .resource-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    transition: all 0.15s;
+  }
+
+  .resource-card:hover {
+    border-color: rgba(201, 168, 76, 0.4);
+    background: var(--surface2);
+    transform: translateY(-1px);
+  }
+
+  .resource-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .yt { background: rgba(255, 0, 0, 0.15); }
+  .site { background: rgba(201, 168, 76, 0.15); }
+  .pdf { background: rgba(74, 158, 106, 0.15); }
+
+  .resource-info h4 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.2rem;
+    line-height: 1.3;
+  }
+
+  .resource-info p {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* TIPS */
+  .tip-box {
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.06), rgba(201, 168, 76, 0.02));
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .tip-box strong {
+    color: var(--accent2);
+  }
+
+  /* SUBSECTION */
+  .subsection-title {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin: 1.5rem 0 0.7rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* SCROLL TOP */
+  .scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 40px; height: 40px;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+  }
+
+  .scroll-top.visible { opacity: 1; }
+
+  @media (max-width: 600px) {
+    .mod-header { flex-direction: column; gap: 0.5rem; }
+    .mod-number { font-size: 2.5rem; }
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="piano-keys-deco">
+    <div class="key-w"></div><div class="key-b"></div>
+    <div class="key-w"></div><div class="key-b"></div>
+    <div class="key-w"></div>
+    <div class="key-w"></div><div class="key-b"></div>
+    <div class="key-w"></div><div class="key-b"></div>
+    <div class="key-w"></div><div class="key-b"></div>
+    <div class="key-w"></div>
+    <div class="key-w"></div><div class="key-b"></div>
+    <div class="key-w"></div><div class="key-b"></div>
+    <div class="key-w"></div>
+  </div>
+  <h1>Roadmap de <span>Teclado & Piano</span></h1>
+  <p>Do zero ao gospel americano avançado · 7 módulos completos</p>
+  <div class="progress-bar-wrap">
+    <label><span>Seu progresso</span><span id="progress-label">0%</span></label>
+    <div class="progress-bar"><div class="progress-bar-fill" id="main-progress"></div></div>
+  </div>
+</header>
+
+<!-- TABS NAV -->
+<nav class="tabs-nav" id="tabsNav">
+  <button class="tab-btn active" onclick="switchTab(0)" id="tabBtn0">
+    <span class="mod-dot" style="background:#b85c38"></span>Módulo 1
+  </button>
+  <button class="tab-btn" onclick="switchTab(1)" id="tabBtn1">
+    <span class="mod-dot" style="background:#8b5e9e"></span>Módulo 2
+  </button>
+  <button class="tab-btn" onclick="switchTab(2)" id="tabBtn2">
+    <span class="mod-dot" style="background:#3a7a9e"></span>Módulo 3
+  </button>
+  <button class="tab-btn" onclick="switchTab(3)" id="tabBtn3">
+    <span class="mod-dot" style="background:#4a9e6a"></span>Módulo 4
+  </button>
+  <button class="tab-btn" onclick="switchTab(4)" id="tabBtn4">
+    <span class="mod-dot" style="background:#9e7a3a"></span>Módulo 5
+  </button>
+  <button class="tab-btn" onclick="switchTab(5)" id="tabBtn5">
+    <span class="mod-dot" style="background:#9e3a6a"></span>Módulo 6
+  </button>
+  <button class="tab-btn" onclick="switchTab(6)" id="tabBtn6">
+    <span class="mod-dot" style="background:#3a6a9e"></span>Módulo 7
+  </button>
+</nav>
+
+<!-- =================== MÓDULO 1 =================== -->
+<div class="tab-panel active" id="panel0">
+<div class="container">
+  <div class="mod-header">
+    <div class="mod-number">01</div>
+    <div class="mod-info">
+      <div class="level-badge" style="background:rgba(184,92,56,0.15); color:#e0855a;">● Iniciante Absoluto</div>
+      <h2>Do Zero</h2>
+      <p>Primeiros contatos com o instrumento. Aqui você vai entender o teclado visualmente, localizar notas, posicionar as mãos corretamente e executar os primeiros exercícios de destreza.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Dica do módulo:</strong> Antes de tudo, postura é tudo. Sente-se com os cotovelos na altura das teclas, punhos levemente elevados e dedos curvos. Esses hábitos evitam lesões e aceleram o aprendizado.
+  </div>
+
+  <div class="lessons-grid" id="lessons-m1">
+    <div class="subsection-title">Fundamentos</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Apostila do módulo</span><span class="lesson-tag">Material</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">O que vamos aprender aqui</span><span class="lesson-tag">Intro</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Olhando pro teclado (aproveitando os padrões)</span><span class="lesson-tag">Teoria</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Localizando as notas</span><span class="lesson-tag">Teoria</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">O que são as teclas pretas</span><span class="lesson-tag">Teoria</span></div>
+    <div class="subsection-title">Técnica</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Padrões dos dedos</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Posicionamento correto das mãos</span><span class="lesson-tag">Técnica</span></div>
+    <div class="subsection-title">Exercícios</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">1º exercício – destravando os dedos</span><span class="lesson-tag">Prática</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">2º exercício – destravando as mãos</span><span class="lesson-tag">Prática</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">3º – usando o metrônomo</span><span class="lesson-tag">Ritmo</span></div>
+    <div class="subsection-title">Teoria Básica</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Intervalos – tom e semitom</span><span class="lesson-tag">Teoria</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Notas musicais – cifra de cada nota</span><span class="lesson-tag">Teoria</span></div>
+  </div>
+
+  <div class="resources-section">
+    <h3>🎬 Recursos & Referências</h3>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://www.youtube.com/watch?v=9b3S7PFvpAY" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Milo Andreo – Teclado do Zero</h4><p>Canal referência no Brasil, começando do absoluto zero com mais de 63M de visualizações</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=como+localizar+notas+no+teclado+iniciante" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Localizar Notas no Teclado</h4><p>Busca YouTube: tutoriais sobre como encontrar Dó, Fá e todas as notas rapidamente</p></div>
+      </a>
+      <a class="resource-card" href="https://www.descomplicandoamusica.com/como-tocar-teclado-aula-para-iniciantes/" target="_blank">
+        <div class="resource-icon site">🌐</div>
+        <div class="resource-info"><h4>Descomplicando a Música</h4><p>Guia completo de posição das mãos, dedilhados e primeiros acordes com diagramas</p></div>
+      </a>
+      <a class="resource-card" href="https://static.musixe.com/wp-content/uploads/2022/04/15160110/TECLADO-INICIANTE-MODULO-1.pdf" target="_blank">
+        <div class="resource-icon pdf">📄</div>
+        <div class="resource-info"><h4>Apostila Teclado Iniciante M1</h4><p>PDF gratuito com estrutura de notas, postura e primeiras músicas em gráfico</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=metrônomo+teclado+iniciante+exercicio" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Como Usar o Metrônomo</h4><p>Exercícios com clique para desenvolver precisão rítmica desde o início</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=tom+semitom+teclado+teoria+musical+português" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Tom e Semitom – Teoria</h4><p>Entenda a diferença entre tom e semitom visualmente no teclado</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- =================== MÓDULO 2 =================== -->
+<div class="tab-panel" id="panel1">
+<div class="container">
+  <div class="mod-header">
+    <div class="mod-number">02</div>
+    <div class="mod-info">
+      <div class="level-badge" style="background:rgba(139,94,158,0.15); color:#b07ece;">● Básico</div>
+      <h2>Domínio Essencial</h2>
+      <p>Primeiras escalas, formação de tríades, campo harmônico e como tocar uma música completa com as duas mãos. O módulo que tira você do silêncio para a harmonia.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Dica do módulo:</strong> Aprenda os tipos de tríades (maior, menor, diminuta) em Dó primeiro, depois transponha para outras tonalidades. O campo harmônico em tríades é a base de 90% das músicas populares.
+  </div>
+
+  <div class="lessons-grid">
+    <div class="subsection-title">Fundamentos Harmônicos</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Orientação do Módulo</span><span class="lesson-tag">Intro</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">A primeira escala</span><span class="lesson-tag">Escala</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Intervalos – introdução</span><span class="lesson-tag">Teoria</span></div>
+    <div class="subsection-title">Acordes</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tríades (tipos de tríades)</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Notas, acordes e progressões</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tríades</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Inversões das Tríades</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tríades diminutas</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Campo harmônico em tríades</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="subsection-title">Prática Aplicada</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Mão esquerda e direita (funções)</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Pedal de sustain – como usar</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Progressão de acordes (música pop)</span><span class="lesson-tag">Prática</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tocando uma música</span><span class="lesson-tag">Música</span></div>
+  </div>
+
+  <div class="resources-section">
+    <h3>🎬 Recursos & Referências</h3>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=triades+teclado+maior+menor+diminuta+português" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Tríades no Teclado</h4><p>Formação das tríades maior, menor e diminuta com exemplos práticos</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=campo+harmonico+triades+teclado+iniciante" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Campo Harmônico em Tríades</h4><p>Como montar e aplicar os 7 acordes do campo harmônico maior</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=inversao+triades+teclado+piano" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Inversões de Tríades</h4><p>Primeira e segunda inversão, por que usar e como soam</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=pedal+sustain+teclado+como+usar" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Pedal de Sustain</h4><p>Quando e como usar o pedal para enriquecer o som sem "sujar" a harmonia</p></div>
+      </a>
+      <a class="resource-card" href="https://tocarteclado.com/" target="_blank">
+        <div class="resource-icon site">🌐</div>
+        <div class="resource-info"><h4>Tocar Teclado</h4><p>Site com tutoriais passo a passo de acordes, progressões e músicas completas</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=progressao+acordes+pop+teclado+4+acordes" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Progressões Pop (4 acordes)</h4><p>I-V-vi-IV e outras progressões populares aplicadas ao teclado</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- =================== MÓDULO 3 =================== -->
+<div class="tab-panel" id="panel2">
+<div class="container">
+  <div class="mod-header">
+    <div class="mod-number">03</div>
+    <div class="mod-info">
+      <div class="level-badge" style="background:rgba(58,122,158,0.15); color:#6ab2d8;">● Básico-Intermediário</div>
+      <h2>Teoria Fundamental</h2>
+      <p>Escalas maior e menor natural com digitação correta, acordes relativos e anti-relativos, tétrades e funções harmônicas. O vocabulário que separa o amador do músico.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Dica do módulo:</strong> Todo tom maior tem uma relativa menor — aprender esse par dobra seu repertório sem esforço extra. A escala de Dó maior e a de Lá menor usam as mesmas notas!
+  </div>
+
+  <div class="lessons-grid">
+    <div class="subsection-title">Escalas</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Orientação do módulo</span><span class="lesson-tag">Intro</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Escala maior natural (digitação correta)</span><span class="lesson-tag">Escala</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Escala menor natural (formação e digitação)</span><span class="lesson-tag">Escala</span></div>
+    <div class="subsection-title">Relações Harmônicas</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Acordes relativos</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Acordes anti-relativos</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Exercício de tríades e inversões</span><span class="lesson-tag">Prática</span></div>
+    <div class="subsection-title">Acordes de 4 Sons</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tétrades</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Campo harmônico em tétrades</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Funções harmônicas</span><span class="lesson-tag">Teoria</span></div>
+  </div>
+
+  <div class="resources-section">
+    <h3>🎬 Recursos & Referências</h3>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=escala+maior+natural+digitacao+correta+teclado" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Escala Maior – Digitação Correta</h4><p>Como cruzar o polegar e escalar todos os tons sem travar os dedos</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=escala+menor+natural+teclado+formação" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Escala Menor Natural</h4><p>Formação, fórmula de intervalos e digitação da escala menor natural</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=acordes+relativos+teclado+maior+menor" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Acordes Relativos</h4><p>Como identificar e usar pares maior/menor relativo nas músicas</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=tetrades+campo+harmonico+teclado+piano" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Tétrades e Campo Harmônico</h4><p>Acordes com sétima no campo harmônico maior: Δ7, m7, 7, m7b5</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=funcoes+harmonicas+tonico+subdominante+dominante+teclado" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Funções Harmônicas</h4><p>Tônica, subdominante e dominante: como cada acorde se comporta na música</p></div>
+      </a>
+      <a class="resource-card" href="https://projetosaotiago.ong.br/assets/uploads/cursos/3/apostila-de-teclado-nivel-i-10.11.23.pdf" target="_blank">
+        <div class="resource-icon pdf">📄</div>
+        <div class="resource-info"><h4>Apostila Nível I – PDF</h4><p>Material com escalas, semitons, tétrades e dicionário de acordes</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- =================== MÓDULO 4 =================== -->
+<div class="tab-panel" id="panel3">
+<div class="container">
+  <div class="mod-header">
+    <div class="mod-number">04</div>
+    <div class="mod-info">
+      <div class="level-badge" style="background:rgba(74,158,106,0.15); color:#6dcc8e;">● Iniciante na Prática</div>
+      <h2>Iniciante na Prática</h2>
+      <p>Aplicação real do que foi estudado. Dedilhados, baixo invertido, tríades abertas, backing tracks e acompanhamento de acapellas gospel e popular.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Dica do módulo:</strong> Sempre pratique com backing track ou metrônomo. Tocar "no tempo" é mais importante do que tocar todas as notas certas. O groove vem antes da perfeição.
+  </div>
+
+  <div class="lessons-grid">
+    <div class="subsection-title">Dedilhado & Mão Esquerda</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Dedilhado simples</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Abertura mão esquerda</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Usando as duas mãos</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Baixo invertido</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tríades abertas (mão esquerda)</span><span class="lesson-tag">Acordes</span></div>
+    <div class="subsection-title">Aplicação Musical</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Exercício backing track</span><span class="lesson-tag">Prática</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Aplicando a escala maior natural</span><span class="lesson-tag">Escalas</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Aplicando a escala menor natural</span><span class="lesson-tag">Escalas</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tocando uma música em tonalidade menor</span><span class="lesson-tag">Música</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Progressões de acordes</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem de acordes com tríades diminutas</span><span class="lesson-tag">Passagem</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Acompanhando um acapella (gospel)</span><span class="lesson-tag">Gospel</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Acompanhando um acapella (popular)</span><span class="lesson-tag">Popular</span></div>
+  </div>
+
+  <div class="resources-section">
+    <h3>🎬 Recursos & Referências</h3>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=dedilhado+teclado+mão+esquerda+abertura+acompanhamento" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Dedilhados e Mão Esquerda</h4><p>Padrões de acompanhamento com a mão esquerda para pop e gospel</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=baixo+invertido+teclado+piano+acompanhamento" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Baixo Invertido no Teclado</h4><p>Como usar notas do baixo que não são a fundamental do acorde</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=backing+track+teclado+gospel+iniciante" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Backing Tracks para Teclado</h4><p>Faixas de acompanhamento para praticar em casa no ritmo certo</p></div>
+      </a>
+      <a class="resource-card" href="https://tocarteclado.com/cifra/gospel/" target="_blank">
+        <div class="resource-icon site">🌐</div>
+        <div class="resource-info"><h4>Tutoriais Gospel – Tocar Teclado</h4><p>Músicas gospel passo a passo com cifras e explicações detalhadas</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=triades+diminutas+passagem+acorde+teclado" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Passagem com Diminutas</h4><p>Como usar tríades diminutas como acorde de passagem cromática</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- =================== MÓDULO 5 =================== -->
+<div class="tab-panel" id="panel4">
+<div class="container">
+  <div class="mod-header">
+    <div class="mod-number">05</div>
+    <div class="mod-info">
+      <div class="level-badge" style="background:rgba(158,122,58,0.15); color:#d4a855;">● Intermediário – Teoria</div>
+      <h2>Intermediário (Teoria)</h2>
+      <p>Extensões de acordes (9ª, 11ª, 13ª), escalas avançadas (pentatônica, tons inteiros), diminutos e suas inversões. O nível que dá sofisticação ao seu som.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Dica do módulo:</strong> Extensões não precisam ser tocadas todas de uma vez. Uma 9ª bem colocada na voz aguda da mão direita já muda completamente a cor do acorde. Menos pode ser mais.
+  </div>
+
+  <div class="lessons-grid">
+    <div class="subsection-title">Intervalos e Extensões</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Intervalos da escala maior</span><span class="lesson-tag">Teoria</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Regras dos intervalos</span><span class="lesson-tag">Teoria</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Extensões de acordes</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Extensões (9°, 11°, 13°)</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Extensões para acorde maior</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Extensões para acorde menor</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Acorde (7°, 9°, 11)</span><span class="lesson-tag">Acordes</span></div>
+    <div class="subsection-title">Escalas Avançadas</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Escalas</span><span class="lesson-tag">Escalas</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Pentatônica (digitação)</span><span class="lesson-tag">Escalas</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Pentatônica menor (digitação)</span><span class="lesson-tag">Escalas</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Escala de tons inteiros</span><span class="lesson-tag">Escalas</span></div>
+    <div class="subsection-title">Diminutos</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Diminutos</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Acorde diminuto e meio diminuto</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Acordes diminutos com sétima</span><span class="lesson-tag">Acordes</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Diminutos inversões (treino)</span><span class="lesson-tag">Prática</span></div>
+  </div>
+
+  <div class="resources-section">
+    <h3>🎬 Recursos & Referências</h3>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=extensoes+acordes+9+11+13+teclado+piano+português" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Extensões 9ª, 11ª e 13ª</h4><p>Como adicionar tensões nos acordes para criar sonoridades mais ricas e modernas</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=escala+pentatonica+teclado+digitação+tutorial" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Pentatônica no Teclado</h4><p>Digitação e aplicação da pentatônica maior e menor para improvisação</p></div>
+      </a>
+      <a class="resource-card" href="https://www.teclaseafins.com.br/acordes-diminutos-na-musica-gospel/" target="_blank">
+        <div class="resource-icon site">🌐</div>
+        <div class="resource-info"><h4>Diminutos no Gospel – Teclas & Afins</h4><p>Formação teórica, função harmônica e aplicação do diminuto em hinos e louvores</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=escala+tons+inteiros+teclado+dominante" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Escala de Tons Inteiros</h4><p>Aplicação sobre acordes dominantes para criar tensão e movimento</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=acorde+diminuto+inversoes+teclado+piano" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Inversões do Acorde Diminuto</h4><p>Como o diminuto soa igual em todas as inversões e como aproveitar isso</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- =================== MÓDULO 6 =================== -->
+<div class="tab-panel" id="panel5">
+<div class="container">
+  <div class="mod-header">
+    <div class="mod-number">06</div>
+    <div class="mod-info">
+      <div class="level-badge" style="background:rgba(158,58,106,0.15); color:#d87aab;">● Intermediário – Prática</div>
+      <h2>Intermediário (Prática)</h2>
+      <p>Diminutos em bloco e arpejo, Drop 2, apogiaturas, acordes alterados e arpejos. O módulo mais denso do curso — aqui o seu teclado ganha identidade.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Dica do módulo:</strong> O Drop 2 transforma sua mão direita. Estude com ciclo de quartas — percorra todos os 12 tons com o mesmo voicing antes de avançar. A memória muscular é tudo aqui.
+  </div>
+
+  <div class="lessons-grid">
+    <div class="subsection-title">Diminutos na Prática</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Diminutos</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem de acordes com diminutos em bloco</span><span class="lesson-tag">Passagem</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem com diminutos (arpejo)</span><span class="lesson-tag">Passagem</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem com diminutos (cromatismo)</span><span class="lesson-tag">Passagem</span></div>
+    <div class="subsection-title">Drop 2</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Conceito de drop 2</span><span class="lesson-tag">Teoria</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Drop 2 – Yoham Kim "Above All"</span><span class="lesson-tag">Música</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Drop 2 com ciclo de quartas</span><span class="lesson-tag">Prática</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Drop 2 treino com click track</span><span class="lesson-tag">Ritmo</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Aplicação drop 2</span><span class="lesson-tag">Prática</span></div>
+    <div class="subsection-title">Apogiaturas</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Conceito de apogiatura</span><span class="lesson-tag">Teoria</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Apogiatura simples</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Apogiatura nota com na ponta</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Apogiatura sobre a pentatônica</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Apogiatura em dueto</span><span class="lesson-tag">Técnica</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Exercício de apogiatura em tríades (todos os tons)</span><span class="lesson-tag">Prática</span></div>
+    <div class="subsection-title">Acorde Alterado</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Acorde alterado – (intervalos, função)</span><span class="lesson-tag">Teoria</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Voicing do acorde alterado</span><span class="lesson-tag">Voicing</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Resolvendo em acorde menor</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Resolvendo em acorde maior</span><span class="lesson-tag">Harmonia</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Aplicação em música popular</span><span class="lesson-tag">Prática</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Aplicação em música gospel</span><span class="lesson-tag">Gospel</span></div>
+    <div class="subsection-title">Arpejos</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tríades (arpejo)</span><span class="lesson-tag">Arpejo</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Arpejo diminuto</span><span class="lesson-tag">Arpejo</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Arpejo acorde alterado</span><span class="lesson-tag">Arpejo</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Arpejo na introdução</span><span class="lesson-tag">Arpejo</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Arpejo no meio da música</span><span class="lesson-tag">Arpejo</span></div>
+  </div>
+
+  <div class="resources-section">
+    <h3>🎬 Recursos & Referências</h3>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://tocandojazz.com/drop-2-no-teclado/" target="_blank">
+        <div class="resource-icon site">🌐</div>
+        <div class="resource-info"><h4>Drop 2 no Teclado – Tocando Jazz</h4><p>Conceito, inversões e exercícios com ciclo de quartas para dominar o Drop 2</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=drop+2+teclado+piano+gospel+jazz+português" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Drop 2 – Tutorial Completo</h4><p>Voicings Drop 2 na prática, com aplicação em músicas gospel e jazz</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=apogiatura+teclado+piano+gospel+tutorial" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Apogiaturas no Teclado</h4><p>Técnica de ornamentação usada amplamente no gospel e jazz moderno</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=acorde+alterado+teclado+dominante+7b9+função" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Acorde Alterado</h4><p>7b9, 7#9, 7b13: como construir e resolver os acordes alterados</p></div>
+      </a>
+      <a class="resource-card" href="https://tocarteclado.com/arpejos-para-teclado-e-piano/" target="_blank">
+        <div class="resource-icon site">🌐</div>
+        <div class="resource-info"><h4>Arpejos no Teclado</h4><p>Técnicas de arpejo para preenchimento e introduções musicais</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=arpejo+teclado+gospel+introdução+música" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Arpejos em Músicas Gospel</h4><p>Como criar introduções e preenchimentos com arpejos elaborados</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- =================== MÓDULO 7 =================== -->
+<div class="tab-panel" id="panel6">
+<div class="container">
+  <div class="mod-header">
+    <div class="mod-number">07</div>
+    <div class="mod-info">
+      <div class="level-badge" style="background:rgba(58,106,158,0.15); color:#6aa3d8;">● Avançado</div>
+      <h2>Gospel Americano</h2>
+      <p>O ápice do curso. Movimentos clássicos do gospel americano, walking bass, licks de blues, passagens 2-5-1, drop 2 com diminutos e levadas de mão esquerda.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Dica do módulo:</strong> O gospel americano é blues sublimado. Antes dos licks avançados, domine o feel: o suingue do blues vive nas notas "erradas" tocadas no momento certo. Ouça muito antes de imitar.
+  </div>
+
+  <div class="lessons-grid">
+    <div class="subsection-title">Movimentos Clássicos</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Movimento clássico</span><span class="lesson-tag">Gospel</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Movimento mais usado</span><span class="lesson-tag">Gospel</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Movimento cromático</span><span class="lesson-tag">Gospel</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Movimento como passagem de acorde</span><span class="lesson-tag">Passagem</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem de acorde</span><span class="lesson-tag">Passagem</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Movimento 1-2</span><span class="lesson-tag">Gospel</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Tocando gospel com 2 tríades</span><span class="lesson-tag">Gospel</span></div>
+    <div class="subsection-title">Passagens Harmônicas</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem de acordes</span><span class="lesson-tag">Passagem</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Diminutos + drop 2</span><span class="lesson-tag">Avançado</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Movimento diminuto + drop 2</span><span class="lesson-tag">Avançado</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem 2-5-1 cromático</span><span class="lesson-tag">Progressão</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem 2-5-1 menor (7-3-6)</span><span class="lesson-tag">Progressão</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem 1 – 4</span><span class="lesson-tag">Progressão</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem 1 – 4 (2)</span><span class="lesson-tag">Progressão</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem 2-5-1 menor</span><span class="lesson-tag">Progressão</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Passagem 2-5-1 menor com drop 2</span><span class="lesson-tag">Avançado</span></div>
+    <div class="subsection-title">Licks Gospel</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick gospel 1</span><span class="lesson-tag">Lick</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick gospel 2</span><span class="lesson-tag">Lick</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick de passagem 1</span><span class="lesson-tag">Lick</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick de passagem 2</span><span class="lesson-tag">Lick</span></div>
+    <div class="subsection-title">Blues & Walking Bass</div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Base mão esquerda</span><span class="lesson-tag">Blues</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Base mão esquerda 2</span><span class="lesson-tag">Blues</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Mão esquerda levada 1</span><span class="lesson-tag">Blues</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Mão esquerda levada 2</span><span class="lesson-tag">Blues</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Frases mãos esquerda</span><span class="lesson-tag">Blues</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Walking bass</span><span class="lesson-tag">Blues</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Mão esquerda + mão direita</span><span class="lesson-tag">Blues</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick blues 1</span><span class="lesson-tag">Lick</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick blues 2</span><span class="lesson-tag">Lick</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick blues 3</span><span class="lesson-tag">Lick</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick finalização 1</span><span class="lesson-tag">Lick</span></div>
+    <div class="lesson-item" onclick="toggleLesson(this)"><div class="lesson-check"></div><span class="lesson-title">Lick finalização 2</span><span class="lesson-tag">Lick</span></div>
+  </div>
+
+  <div class="resources-section">
+    <h3>🎬 Recursos & Referências</h3>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=gospel+americano+teclado+movimentos+cromaticos" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Gospel Americano – Movimentos</h4><p>Os movimentos cromáticos e clássicos do estilo gospel norte-americano</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=passagem+2+5+1+teclado+piano+gospel" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Passagem 2-5-1</h4><p>A progressão mais importante do jazz e gospel com variações cromaticas</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=walking+bass+teclado+piano+gospel+blues" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Walking Bass no Teclado</h4><p>Como criar linhas de walking bass com a mão esquerda no estilo gospel/jazz</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=licks+blues+teclado+piano+gospel+americano" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Licks Blues & Gospel</h4><p>Frases prontas para inserir nas músicas com feeling de blues americano</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=diminutos+drop+2+gospel+piano+teclado" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Diminutos + Drop 2</h4><p>Combinação avançada de diminutos com voicings Drop 2 no gospel americano</p></div>
+      </a>
+      <a class="resource-card" href="https://www.youtube.com/results?search_query=levada+blues+mao+esquerda+teclado+gospel" target="_blank">
+        <div class="resource-icon yt">▶</div>
+        <div class="resource-info"><h4>Levadas Blues – Mão Esquerda</h4><p>Padrões rítmicos de mão esquerda com swing e feel de blues</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SCROLL TOP BTN -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // TAB SWITCHING
+  function switchTab(idx) {
+    document.querySelectorAll('.tab-panel').forEach((p, i) => {
+      p.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      b.classList.toggle('active', i === idx);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // LESSON TOGGLE
+  function toggleLesson(el) {
+    el.classList.toggle('completed');
+    updateProgress();
+    saveProgress();
+  }
+
+  // PROGRESS
+  function updateProgress() {
+    const total = document.querySelectorAll('.lesson-item').length;
+    const done = document.querySelectorAll('.lesson-item.completed').length;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('main-progress').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = pct + '%';
+  }
+
+  // SAVE/LOAD (localStorage)
+  function saveProgress() {
+    const items = document.querySelectorAll('.lesson-item');
+    const state = Array.from(items).map(el => el.classList.contains('completed'));
+    try { localStorage.setItem('teclado-roadmap-v1', JSON.stringify(state)); } catch(e) {}
+  }
+
+  function loadProgress() {
+    try {
+      const saved = JSON.parse(localStorage.getItem('teclado-roadmap-v1') || '[]');
+      const items = document.querySelectorAll('.lesson-item');
+      saved.forEach((done, i) => {
+        if (done && items[i]) items[i].classList.add('completed');
+      });
+    } catch(e) {}
+    updateProgress();
+  }
+
+  // SCROLL TOP
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 300);
+  });
+
+  // INIT
+  loadProgress();
+
+  // Animate progress bar on load
+  setTimeout(updateProgress, 300);
+</script>
+</body>
+</html>
